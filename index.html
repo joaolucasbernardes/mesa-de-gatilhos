@@ -247,9 +247,10 @@
     display: inline-flex; align-items: center;
     font-family: var(--mono); font-size: 10px; font-weight: 600;
     letter-spacing: .08em; padding: 3px 8px; border-radius: 20px;
-    background: var(--surface-2); color: var(--ink-soft); border: 1px solid var(--line);
+    background: var(--surface-2); color: var(--ink-faint); border: 1px solid var(--line);
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
   }
-  .estado[data-aberto="sim"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .estado[data-tocou="sim"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
 
   .card-nome {
     font-family: var(--display); font-size: 17px; font-weight: 600;
@@ -833,8 +834,8 @@
 
       var estado = document.createElement("span");
       estado.className = "estado";
-      estado.setAttribute("data-aberto", item.aberto ? "sim" : "nao");
-      estado.textContent = item.aberto ? "ABERTO" : "FECHADO";
+      estado.setAttribute("data-tocou", "nao");
+      estado.textContent = "CAMPAINHA";
 
       topo.appendChild(numero);
       topo.appendChild(estado);
@@ -931,13 +932,13 @@
 
     chamar("pushcontactbyname", item.nome).then(function () {
       card.setAttribute("data-pulsando", "sim");
-      selo.setAttribute("data-aberto", "sim");
-      selo.textContent = "ABERTO";
+      selo.setAttribute("data-tocou", "sim");
+      selo.textContent = "TOCOU";
       setTimeout(function () {
-        selo.setAttribute("data-aberto", "nao");
-        selo.textContent = "FECHADO";
+        selo.setAttribute("data-tocou", "nao");
+        selo.textContent = "CAMPAINHA";
         card.removeAttribute("data-pulsando");
-      }, 900);
+      }, 1400);
       recado("Gatilho “" + item.nome + "” disparado. A rotina ligada a ele deve reagir em instantes.", "ok");
     }).catch(function (erro) {
       recado(erro.message, "erro");
