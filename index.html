@@ -634,8 +634,22 @@
 
   /* -------- conversa com a API -------- */
 
+  /* Colar endereco costuma perder caracteres do comeco, e o campo aceita
+     porque "ttps://host" e uma URL valida, so que de um esquema que nao
+     existe. Aqui a gente reduz tudo ao host e sempre forca https, que e o
+     unico jeito que o API Gateway atende. */
+  function normalizarEndereco(bruto) {
+    var v = String(bruto || "").trim().replace(/\/+$/, "");
+    if (!v) return "";
+    var m = v.match(/^[A-Za-z][A-Za-z0-9+.-]*:\/\/(.+)$/);
+    if (m) { return "https://" + m[1]; }
+    m = v.match(/^\/\/(.+)$/);
+    if (m) { return "https://" + m[1]; }
+    return "https://" + v;
+  }
+
   function chamar(comando, param1, param2) {
-    var endereco = elUrl.value.trim().replace(/\/+$/, "");
+    var endereco = normalizarEndereco(elUrl.value);
     var senha = elSenha.value;
     if (!endereco || !senha) {
       return Promise.reject(new Error("Preencha o endereço da API e a senha."));
@@ -762,12 +776,17 @@
   /* -------- acoes -------- */
 
   function entrar() {
-    var endereco = elUrl.value.trim();
+    var endereco = normalizarEndereco(elUrl.value);
     var senha = elSenha.value;
-    if (!endereco || !senha) {
+    if (!elUrl.value.trim() || !senha) {
       recado("Preencha o endereço da API e a senha.", "erro");
       return;
     }
+    if (!/^https:\/\/[^\/\s]+\.[^\/\s]+$/.test(endereco)) {
+      recado("O endereço não parece completo. Ele termina em amazonaws.com e não tem barra no fim.", "erro");
+      return;
+    }
+    elUrl.value = endereco;
     guardar(CHAVE_URL, endereco);
     guardar(CHAVE_SENHA, senha);
     conferir(true);
