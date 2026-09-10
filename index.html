@@ -89,7 +89,7 @@
 
   * { box-sizing: border-box; }
 
-  /* precisa vencer o display:flex das secoes abaixo */
+  /* precisa vencer o display:flex das secoes */
   [hidden] { display: none !important; }
 
   body {
@@ -99,17 +99,11 @@
     font-size: 15px;
     line-height: 1.5;
     padding: 0 16px;
-    padding-block: 30px 60px;
+    padding-block: 26px 60px;
     -webkit-font-smoothing: antialiased;
   }
 
-  .envelope {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
+  .envelope { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
 
   /* ---------------- cabecalho ---------------- */
 
@@ -119,25 +113,15 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 8px 20px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--ink);
   }
 
   h1 {
     margin: 0;
     font-family: var(--display);
-    font-size: clamp(28px, 6vw, 38px);
+    font-size: clamp(26px, 5.5vw, 34px);
     font-weight: 700;
     letter-spacing: -.03em;
     line-height: 1.05;
-    text-wrap: balance;
-  }
-
-  .subtitulo {
-    margin: 6px 0 0;
-    color: var(--ink-soft);
-    font-size: 14px;
-    max-width: 46ch;
   }
 
   .selo {
@@ -153,16 +137,37 @@
     white-space: nowrap;
   }
 
-  .lampada {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--line-strong);
-    flex: none;
-  }
+  .lampada { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); flex: none; }
   .selo[data-ligado="sim"] .lampada { background: var(--ok); }
   .selo[data-ligado="erro"] .lampada { background: var(--bad); }
   .selo[data-ligado="indo"] .lampada { background: var(--accent); }
+
+  /* ---------------- abas ---------------- */
+
+  .abas {
+    display: flex;
+    gap: 2px;
+    border-bottom: 2px solid var(--line);
+    margin-bottom: 2px;
+  }
+
+  .aba {
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    padding: 10px 2px;
+    margin-right: 22px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-faint);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .aba:hover { color: var(--ink-soft); }
+  .aba[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 
   /* ---------------- blocos ---------------- */
 
@@ -188,11 +193,11 @@
 
   .caixa-corpo { padding: 18px; display: flex; flex-direction: column; gap: 15px; }
 
+  .divisa { height: 1px; background: var(--line); margin: 2px 0; }
+
   /* ---------------- porta de entrada ---------------- */
 
-  .porta { max-width: 480px; width: 100%; margin: 18px auto 0; }
-  .porta .caixa-corpo { gap: 16px; }
-
+  .porta { max-width: 470px; width: 100%; margin: 16px auto 0; }
   .porta-texto { margin: 0; font-size: 14px; color: var(--ink-soft); }
 
   /* ---------------- campos ---------------- */
@@ -220,8 +225,8 @@
     outline-offset: 2px;
   }
 
-  .linha-campos { display: flex; flex-wrap: wrap; gap: 12px; }
-  .linha-campos > .campo { flex: 1 1 210px; }
+  .linha-campos { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+  .linha-campos > .campo { flex: 1 1 200px; }
 
   /* ---------------- botoes ---------------- */
 
@@ -248,10 +253,23 @@
   .btn-disparo { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
   .btn-disparo:hover:not([disabled]) { background: var(--accent); color: var(--accent-ink); }
 
-  .btn-perigo { background: none; color: var(--bad); border-color: transparent; padding: 9px 10px; }
-  .btn-perigo:hover:not([disabled]) { background: var(--bad-soft); }
-
   .fileira-botoes { display: flex; flex-wrap: wrap; gap: 9px; }
+
+  /* acoes secundarias, discretas para nao competir com Disparar */
+  .link-acao {
+    background: none;
+    border: none;
+    padding: 4px 2px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .link-acao:hover { color: var(--ink); }
+  .link-acao.perigo:hover { color: var(--bad); }
 
   /* ---------------- barra de sessao ---------------- */
 
@@ -261,14 +279,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px 14px;
-    padding: 12px 16px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
   }
 
-  .barra-texto { font-size: 13.5px; color: var(--ink-soft); }
+  .barra-texto { font-size: 13px; color: var(--ink-faint); font-family: var(--mono); }
 
   /* ---------------- lista de gatilhos ---------------- */
 
@@ -279,13 +292,12 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 10px 14px;
-    padding: 14px 18px;
+    padding: 15px 18px;
     border-top: 1px solid var(--line);
     position: relative;
   }
   .gatilho:first-child { border-top: none; }
 
-  /* o numero do botao na API, que e a identidade dele */
   .marca {
     flex: none;
     font-family: var(--mono);
@@ -301,13 +313,13 @@
     text-align: center;
   }
 
-  .gatilho-corpo { flex: 1 1 180px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .gatilho-corpo { flex: 1 1 190px; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 
   .nome { font-weight: 600; font-size: 15.5px; overflow-wrap: anywhere; }
 
   .meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); overflow-wrap: anywhere; }
 
-  .gatilho-lado { flex: none; display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .gatilho-lado { flex: none; display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
 
   .estado {
     display: inline-flex;
@@ -324,13 +336,9 @@
     min-width: 76px;
     justify-content: center;
   }
-  .estado[data-aberto="sim"] {
-    background: var(--accent-soft);
-    color: var(--accent);
-    border-color: var(--accent);
-  }
+  .estado[data-aberto="sim"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
 
-  /* assinatura: o contato abrindo e fechando ao disparar */
+  /* o contato abrindo e fechando ao disparar */
   .gatilho::after {
     content: "";
     position: absolute;
@@ -341,18 +349,36 @@
     background: var(--accent);
     opacity: 0;
   }
-  .gatilho[data-pulsando="sim"]::after {
-    animation: percorrer 900ms ease-out;
-  }
+  .gatilho[data-pulsando="sim"]::after { animation: percorrer 900ms ease-out; }
   @keyframes percorrer {
     0%   { width: 0;    opacity: 1; }
     55%  { width: 100%; opacity: 1; }
     100% { width: 100%; opacity: 0; }
   }
 
-  .vazio { padding: 28px 18px; color: var(--ink-soft); font-size: 14px; text-align: center; }
+  .vazio { padding: 30px 18px; color: var(--ink-soft); font-size: 14px; text-align: center; }
 
-  /* ---------------- receita ---------------- */
+  /* ---------------- valores copiaveis ---------------- */
+
+  .valor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 10px 9px 12px;
+  }
+
+  .valor code {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 
   pre {
     margin: 0;
@@ -388,13 +414,7 @@
 
   /* ---------------- recado ---------------- */
 
-  .recado {
-    font-size: 13.5px;
-    padding: 11px 14px;
-    border-radius: 8px;
-    border: 1px solid;
-    display: none;
-  }
+  .recado { font-size: 13.5px; padding: 11px 14px; border-radius: 8px; border: 1px solid; display: none; }
   .recado[data-tipo="ok"] { display: block; background: var(--ok-soft); color: var(--ok); border-color: var(--ok); }
   .recado[data-tipo="erro"] { display: block; background: var(--bad-soft); color: var(--bad); border-color: var(--bad); }
 
@@ -415,22 +435,10 @@
   .contador { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   .contador b { color: var(--ink-soft); font-weight: 600; }
 
-  .link-nu {
-    background: none;
-    border: none;
-    padding: 0 0 0 4px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-faint);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    cursor: pointer;
-  }
-  .link-nu:hover { color: var(--ink); }
-
   @media (max-width: 520px) {
     .gatilho-lado { margin-left: 0; width: 100%; }
     .estado { min-width: 0; }
+    .aba { margin-right: 16px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -442,10 +450,7 @@
 <div class="envelope">
 
   <header class="topo">
-    <div>
-      <h1>Mesa de Gatilhos</h1>
-      <p class="subtitulo">Sensores virtuais que fazem a Siri disparar rotinas da Alexa.</p>
-    </div>
+    <h1>Mesa de Gatilhos</h1>
     <span class="selo" id="selo" data-ligado="nao">
       <span class="lampada"></span><span id="selo-texto">sem conexão</span>
     </span>
@@ -453,6 +458,7 @@
 
   <div class="recado" id="recado"></div>
 
+  <!-- ============ porta de entrada ============ -->
   <section class="porta" id="secao-acesso">
     <div class="caixa">
       <div class="caixa-corpo">
@@ -476,74 +482,132 @@
     </div>
   </section>
 
-  <div class="barra-sessao" id="barra-sessao" hidden>
-    <span class="barra-texto" id="barra-texto">Conectado à sua API.</span>
-    <span class="fileira-botoes">
-      <button class="btn-quieto" id="btn-atualizar">Atualizar lista</button>
-      <button class="btn-quieto" id="btn-trocar">Trocar acesso</button>
-    </span>
+  <!-- ============ navegacao ============ -->
+  <div class="abas" id="abas" role="tablist" hidden>
+    <button class="aba" id="aba-gatilhos" role="tab" aria-selected="true" aria-controls="painel-gatilhos">Gatilhos de rotina</button>
+    <button class="aba" id="aba-api" role="tab" aria-selected="false" aria-controls="painel-api">Acesso à API</button>
   </div>
 
-  <section id="secao-gatilhos" hidden>
-    <h2>Gatilhos</h2>
-    <div class="caixa">
-      <ul class="gatilhos" id="lista"></ul>
-    </div>
-  </section>
+  <!-- ============ gatilhos ============ -->
+  <div id="painel-gatilhos" role="tabpanel" aria-labelledby="aba-gatilhos" hidden>
+    <section>
+      <div class="barra-sessao">
+        <span class="barra-texto" id="barra-texto">nenhum gatilho</span>
+        <span class="fileira-botoes">
+          <button class="btn-quieto" id="btn-atualizar">Atualizar</button>
+          <button class="btn-forte" id="btn-abrir-novo">Novo gatilho</button>
+        </span>
+      </div>
 
-  <section id="secao-novo" hidden>
-    <h2>Novo gatilho</h2>
-    <div class="caixa">
-      <div class="caixa-corpo">
-        <div class="linha-campos">
-          <div class="campo">
-            <label for="novo-numero">Número <span class="dica">até 99999</span></label>
-            <input type="text" id="novo-numero" inputmode="numeric" placeholder="12">
+      <div class="caixa" id="caixa-novo" hidden>
+        <div class="caixa-corpo">
+          <div class="linha-campos">
+            <div class="campo">
+              <label for="novo-numero">Número <span class="dica">até 99999</span></label>
+              <input type="text" id="novo-numero" inputmode="numeric" placeholder="12">
+            </div>
+            <div class="campo">
+              <label for="novo-nome">Nome <span class="dica">como aparece na Alexa</span></label>
+              <input type="text" id="novo-nome" placeholder="Boa Noite Geral">
+            </div>
           </div>
-          <div class="campo">
-            <label for="novo-nome">Nome <span class="dica">como aparece na Alexa</span></label>
-            <input type="text" id="novo-nome" placeholder="Gatilho Cinema">
+          <p class="dica" style="margin:0">
+            Depois de criar, peça à Alexa para buscar dispositivos novos, escolhendo o
+            tipo <strong>Outros</strong>. Só então o gatilho pode virar disparo de rotina.
+          </p>
+          <div class="fileira-botoes">
+            <button class="btn-forte" id="btn-criar">Criar gatilho</button>
+            <button class="btn-quieto" id="btn-cancelar-novo">Cancelar</button>
           </div>
-        </div>
-        <p class="dica" style="margin:0">
-          Depois de criar, peça à Alexa para buscar dispositivos novos, escolhendo o
-          tipo <strong>Outros</strong>. Só então o gatilho pode virar disparo de rotina.
-        </p>
-        <div class="fileira-botoes">
-          <button class="btn-forte" id="btn-criar">Criar gatilho</button>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section id="secao-receita" hidden>
-    <h2>Receita do atalho no iPhone</h2>
-    <div class="caixa">
-      <div class="caixa-corpo">
-        <ol class="passos">
-          <li>No app Atalhos, crie um atalho e adicione <strong>Obter conteúdo do URL</strong>.</li>
-          <li>No campo de endereço, cole a URL da sua API.</li>
-          <li>Toque em <strong>Mostrar mais</strong> e mude o método para <code>POST</code>.</li>
-          <li>Em Cabeçalhos, crie a chave <code>Authorization</code> com a sua senha no valor.</li>
-          <li>Em Corpo da solicitação, escolha <strong>JSON</strong> e monte o conteúdo abaixo.</li>
-          <li>Renomeie o atalho com a frase que você vai falar para a Siri.</li>
-        </ol>
-        <div class="campo">
-          <label for="receita-alvo">Corpo para o gatilho</label>
-          <input type="text" id="receita-alvo" placeholder="Gatilho Dormir" autocomplete="off">
-        </div>
-        <pre id="receita-json">{"command":"pushcontactbyname","param1":"Gatilho Dormir"}</pre>
-        <div class="fileira-botoes">
-          <button class="btn-quieto" id="btn-copiar">Copiar corpo</button>
+      <div class="caixa">
+        <ul class="gatilhos" id="lista"></ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ acesso a API ============ -->
+  <div id="painel-api" role="tabpanel" aria-labelledby="aba-api" hidden>
+    <section>
+      <h2>Credenciais</h2>
+      <div class="caixa">
+        <div class="caixa-corpo">
+          <div class="campo">
+            <label>Endereço</label>
+            <div class="valor">
+              <code id="api-endereco">—</code>
+              <button class="btn-quieto" id="btn-copiar-url">Copiar</button>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label>Senha <span class="dica">vai no cabeçalho Authorization</span></label>
+            <div class="valor">
+              <code id="api-senha">••••••••••••••••</code>
+              <button class="btn-quieto" id="btn-ver-senha">Mostrar</button>
+              <button class="btn-quieto" id="btn-copiar-senha">Copiar</button>
+            </div>
+          </div>
+
+          <p class="dica" style="margin:0">
+            O endereço e a senha juntos abrem todas as suas rotinas. Trate os dois
+            como a chave da sua casa.
+          </p>
+
+          <div class="divisa"></div>
+
+          <div class="campo">
+            <label for="nova-senha">Trocar a senha</label>
+            <div class="linha-campos">
+              <div class="campo">
+                <input type="text" id="nova-senha" placeholder="nova senha" autocomplete="off" spellcheck="false">
+              </div>
+              <span class="fileira-botoes">
+                <button class="btn-quieto" id="btn-sortear">Sortear</button>
+                <button class="btn-forte" id="btn-trocar-senha">Trocar</button>
+              </span>
+            </div>
+          </div>
+          <p class="dica" style="margin:0">
+            Trocar a senha derruba todos os atalhos do iPhone que usam a antiga.
+            Você vai precisar atualizar o cabeçalho em cada um deles.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section style="margin-top:20px">
+      <h2>Como montar o atalho no iPhone</h2>
+      <div class="caixa">
+        <div class="caixa-corpo">
+          <ol class="passos">
+            <li>No app Atalhos, crie um atalho e adicione <strong>Obter conteúdo do URL</strong>.</li>
+            <li>Cole o endereço acima no campo de URL.</li>
+            <li>Toque em <strong>Mostrar mais</strong> e mude o método para <code>POST</code>.</li>
+            <li>Em Cabeçalhos, crie <code>Authorization</code> e cole a senha no valor.</li>
+            <li>Em Pedir Corpo, escolha <strong>JSON</strong> e monte dois campos de texto.</li>
+            <li>Renomeie o atalho com a frase que você vai falar para a Siri.</li>
+          </ol>
+
+          <div class="campo">
+            <label>Corpo, montado campo a campo</label>
+            <pre id="modelo-campos">command   pushcontactbyname
+param1    nome do gatilho</pre>
+          </div>
+
+          <div class="campo">
+            <label>Ou como texto puro <span class="dica">use o botão Copiar de cada gatilho</span></label>
+            <pre id="modelo-texto">{"command":"pushcontactbyname","param1":"nome do gatilho"}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <footer class="rodape">
-    <span class="contador">
-      chamadas feitas por este painel: <b id="contador">0</b><button class="link-nu" id="btn-zerar" type="button">zerar</button>
-    </span>
+    <span class="contador">chamadas feitas por este painel: <b id="contador">0</b></span>
     <span>1 milhão de chamadas custa 1 dólar no API Gateway</span>
   </footer>
 
@@ -564,22 +628,27 @@
   var elSelo = document.getElementById("selo");
   var elSeloTexto = document.getElementById("selo-texto");
   var elContador = document.getElementById("contador");
-  var elReceitaAlvo = document.getElementById("receita-alvo");
-  var elReceitaJson = document.getElementById("receita-json");
   var elBarraTexto = document.getElementById("barra-texto");
+  var elApiEndereco = document.getElementById("api-endereco");
+  var elApiSenha = document.getElementById("api-senha");
+  var elNovaSenha = document.getElementById("nova-senha");
 
   var secAcesso = document.getElementById("secao-acesso");
-  var barraSessao = document.getElementById("barra-sessao");
-  var secGatilhos = document.getElementById("secao-gatilhos");
-  var secNovo = document.getElementById("secao-novo");
-  var secReceita = document.getElementById("secao-receita");
+  var elAbas = document.getElementById("abas");
+  var abaGatilhos = document.getElementById("aba-gatilhos");
+  var abaApi = document.getElementById("aba-api");
+  var painelGatilhos = document.getElementById("painel-gatilhos");
+  var painelApi = document.getElementById("painel-api");
+  var caixaNovo = document.getElementById("caixa-novo");
 
   var btnEntrar = document.getElementById("btn-entrar");
   var btnEsquecer = document.getElementById("btn-esquecer");
   var btnAtualizar = document.getElementById("btn-atualizar");
   var btnCriar = document.getElementById("btn-criar");
+  var btnVerSenha = document.getElementById("btn-ver-senha");
 
   var gatilhos = [];
+  var senhaVisivel = false;
 
   /* -------- armazenamento local, sempre protegido -------- */
 
@@ -602,7 +671,7 @@
     pintarContador();
   }
 
-  /* -------- recados e visibilidade -------- */
+  /* -------- recados -------- */
 
   var relogioRecado = null;
   function recado(texto, tipo) {
@@ -625,14 +694,27 @@
 
   function mostrarPainel(ligado) {
     secAcesso.hidden = ligado;
-    barraSessao.hidden = !ligado;
-    secGatilhos.hidden = !ligado;
-    secNovo.hidden = !ligado;
-    secReceita.hidden = !ligado;
+    elAbas.hidden = !ligado;
+    if (!ligado) {
+      painelGatilhos.hidden = true;
+      painelApi.hidden = true;
+      caixaNovo.hidden = true;
+    } else {
+      trocarAba(abaApi.getAttribute("aria-selected") === "true" ? "api" : "gatilhos");
+    }
     btnEsquecer.hidden = !(recuperar(CHAVE_URL) && recuperar(CHAVE_SENHA));
   }
 
-  /* -------- conversa com a API -------- */
+  function trocarAba(qual) {
+    var ehApi = qual === "api";
+    abaGatilhos.setAttribute("aria-selected", String(!ehApi));
+    abaApi.setAttribute("aria-selected", String(ehApi));
+    painelGatilhos.hidden = ehApi;
+    painelApi.hidden = !ehApi;
+    if (ehApi) { pintarCredenciais(); }
+  }
+
+  /* -------- endereco -------- */
 
   /* Colar endereco costuma perder caracteres do comeco, e o campo aceita
      porque "ttps://host" e uma URL valida, so que de um esquema que nao
@@ -647,6 +729,8 @@
     if (m) { return "https://" + m[1]; }
     return "https://" + v;
   }
+
+  /* -------- conversa com a API -------- */
 
   function chamar(comando, param1, param2) {
     var endereco = normalizarEndereco(elUrl.value);
@@ -686,7 +770,7 @@
     });
   }
 
-  /* -------- leitura e desenho da lista -------- */
+  /* -------- lista -------- */
 
   function interpretarLista(bruto) {
     var linhas = String(bruto).split("\n");
@@ -705,10 +789,23 @@
     return saida;
   }
 
-  function idTecnico(numero) {
-    var n = String(parseInt(numero, 10));
-    while (n.length < 6) { n = "0" + n; }
-    return "switch-" + n;
+  function corpoDoAtalho(nome) {
+    return JSON.stringify({ command: "pushcontactbyname", param1: nome });
+  }
+
+  function copiar(texto, botao) {
+    function avisar() {
+      var antes = botao.textContent;
+      botao.textContent = "Copiado";
+      setTimeout(function () { botao.textContent = antes; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(avisar, function () {
+        recado("O navegador bloqueou a cópia. Selecione o texto e copie na mão.", "erro");
+      });
+    } else {
+      recado("Este navegador não permite copiar sozinho. Selecione o texto e copie na mão.", "erro");
+    }
   }
 
   function desenhar(itens) {
@@ -717,7 +814,7 @@
     if (!itens.length) {
       var vazio = document.createElement("li");
       vazio.className = "vazio";
-      vazio.textContent = "Nenhum gatilho cadastrado ainda. Crie o primeiro abaixo.";
+      vazio.textContent = "Nenhum gatilho ainda. Crie o primeiro no botão acima.";
       elLista.appendChild(vazio);
       return;
     }
@@ -739,7 +836,7 @@
 
       var meta = document.createElement("span");
       meta.className = "meta";
-      meta.textContent = idTecnico(item.numero) + " · sensor de contato";
+      meta.textContent = corpoDoAtalho(item.nome);
 
       corpo.appendChild(nome);
       corpo.appendChild(meta);
@@ -757,13 +854,28 @@
       disparar.textContent = "Disparar";
       disparar.addEventListener("click", function () { acionar(item, disparar, li, estado); });
 
+      var btnCopiar = document.createElement("button");
+      btnCopiar.className = "btn-quieto";
+      btnCopiar.textContent = "Copiar";
+      btnCopiar.title = "Copia o corpo da requisição para o atalho";
+      btnCopiar.addEventListener("click", function () {
+        copiar(corpoDoAtalho(item.nome), btnCopiar);
+      });
+
+      var renomear = document.createElement("button");
+      renomear.className = "link-acao";
+      renomear.textContent = "renomear";
+      renomear.addEventListener("click", function () { rebatizar(item); });
+
       var excluir = document.createElement("button");
-      excluir.className = "btn-perigo";
-      excluir.textContent = "Excluir";
+      excluir.className = "link-acao perigo";
+      excluir.textContent = "excluir";
       excluir.addEventListener("click", function () { remover(item, excluir); });
 
       lado.appendChild(estado);
       lado.appendChild(disparar);
+      lado.appendChild(btnCopiar);
+      lado.appendChild(renomear);
       lado.appendChild(excluir);
 
       li.appendChild(marca);
@@ -801,13 +913,10 @@
       gatilhos = interpretarLista(bruto);
       desenhar(gatilhos);
       mostrarPainel(true);
-      marcarConexao("sim", gatilhos.length + (gatilhos.length === 1 ? " gatilho" : " gatilhos"));
-      elBarraTexto.textContent = "Conectado à sua API.";
+      var quantos = gatilhos.length + (gatilhos.length === 1 ? " gatilho" : " gatilhos");
+      marcarConexao("sim", "conectado");
+      elBarraTexto.textContent = quantos;
       if (limpar) { limparRecado(); }
-      if (!elReceitaAlvo.value && gatilhos.length) {
-        elReceitaAlvo.value = gatilhos[0].nome;
-        pintarReceita();
-      }
     }).catch(function (erro) {
       mostrarPainel(false);
       marcarConexao("erro", "não entrou");
@@ -842,6 +951,24 @@
     });
   }
 
+  function rebatizar(item) {
+    var novo = window.prompt("Novo nome para o gatilho " + item.numero + ":", item.nome);
+    if (novo === null) { return; }
+    novo = novo.trim();
+    if (!novo) {
+      recado("O nome não pode ficar vazio.", "erro");
+      return;
+    }
+    if (novo === item.nome) { return; }
+
+    chamar("setname", item.numero, novo).then(function () {
+      recado("Renomeado para “" + novo + "”. Os atalhos do iPhone que citam o nome antigo precisam ser atualizados, e a Alexa precisa buscar dispositivos de novo.", "ok");
+      return conferir(false);
+    }).catch(function (erro) {
+      recado(erro.message, "erro");
+    });
+  }
+
   function remover(item, botao) {
     if (!window.confirm("Excluir o gatilho “" + item.nome + "”?\n\nAs rotinas da Alexa que usam ele param de disparar.")) {
       return;
@@ -872,14 +999,17 @@
       recado("Dê um nome ao gatilho. É por ele que o atalho do iPhone vai chamar o disparo.", "erro");
       return;
     }
+    var repetido = gatilhos.filter(function (g) { return g.numero === String(parseInt(numero, 10)); });
+    if (repetido.length && !window.confirm("O número " + numero + " já é do gatilho “" + repetido[0].nome + "”.\n\nContinuar renomeia ele em vez de criar um novo.")) {
+      return;
+    }
 
     btnCriar.disabled = true;
     chamar("setname", numero, nome).then(function () {
-      recado("Gatilho “" + nome + "” criado. Agora peça à Alexa para buscar dispositivos novos.", "ok");
+      recado("Gatilho “" + nome + "” criado. Agora peça à Alexa para buscar dispositivos novos, tipo Outros.", "ok");
       document.getElementById("novo-numero").value = "";
       document.getElementById("novo-nome").value = "";
-      elReceitaAlvo.value = nome;
-      pintarReceita();
+      caixaNovo.hidden = true;
       return conferir(false);
     }).catch(function (erro) {
       recado(erro.message, "erro");
@@ -888,37 +1018,55 @@
     });
   }
 
-  /* -------- receita -------- */
+  /* -------- aba de acesso -------- */
 
-  function pintarReceita() {
-    var alvo = elReceitaAlvo.value.trim() || "Gatilho Dormir";
-    elReceitaJson.textContent = JSON.stringify({
-      command: "pushcontactbyname",
-      param1: alvo
-    });
+  function pintarCredenciais() {
+    elApiEndereco.textContent = normalizarEndereco(elUrl.value) || "—";
+    elApiSenha.textContent = senhaVisivel ? (elSenha.value || "—") : "••••••••••••••••";
+    btnVerSenha.textContent = senhaVisivel ? "Ocultar" : "Mostrar";
   }
 
-  function copiarReceita() {
-    var texto = elReceitaJson.textContent;
-    var botao = document.getElementById("btn-copiar");
-    function avisar() {
-      var antes = botao.textContent;
-      botao.textContent = "Copiado";
-      setTimeout(function () { botao.textContent = antes; }, 1800);
+  function sortearSenha() {
+    var alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var bytes = new Uint32Array(32);
+    (window.crypto || window.msCrypto).getRandomValues(bytes);
+    var saida = "";
+    for (var i = 0; i < 32; i++) { saida += alfabeto[bytes[i] % alfabeto.length]; }
+    elNovaSenha.value = saida;
+  }
+
+  function trocarSenha() {
+    var nova = elNovaSenha.value.trim();
+    if (nova.length < 12) {
+      recado("Use ao menos 12 caracteres. Essa senha é a única coisa protegendo suas rotinas.", "erro");
+      return;
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(texto).then(avisar, function () {
-        recado("O navegador bloqueou a cópia. Selecione o texto e copie na mão.", "erro");
-      });
-    } else {
-      recado("Este navegador não permite copiar sozinho. Selecione o texto e copie na mão.", "erro");
+    if (/\s/.test(nova)) {
+      recado("A senha não pode ter espaço. Ela viaja num cabeçalho HTTP.", "erro");
+      return;
     }
+    if (!window.confirm("Trocar a senha da API?\n\nTodos os atalhos do iPhone que usam a senha atual param de funcionar até você atualizar o cabeçalho Authorization em cada um.")) {
+      return;
+    }
+
+    chamar("setpasswd", nova).then(function (resposta) {
+      if (resposta !== nova) {
+        throw new Error("A API não confirmou a nova senha. Nada foi alterado no painel.");
+      }
+      elSenha.value = nova;
+      guardar(CHAVE_SENHA, nova);
+      elNovaSenha.value = "";
+      senhaVisivel = true;
+      pintarCredenciais();
+      recado("Senha trocada. Anote a nova agora e atualize o cabeçalho Authorization dos seus atalhos.", "ok");
+    }).catch(function (erro) {
+      recado(erro.message, "erro");
+    });
   }
 
   /* -------- ligacoes -------- */
 
   btnEntrar.addEventListener("click", entrar);
-
   elUrl.addEventListener("keydown", function (e) { if (e.key === "Enter") { elSenha.focus(); } });
   elSenha.addEventListener("keydown", function (e) { if (e.key === "Enter") { entrar(); } });
 
@@ -928,30 +1076,42 @@
     elUrl.value = "";
     elSenha.value = "";
     gatilhos = [];
+    senhaVisivel = false;
     mostrarPainel(false);
     marcarConexao("nao", "sem conexão");
     recado("Endereço e senha apagados deste navegador.", "ok");
   });
 
-  document.getElementById("btn-trocar").addEventListener("click", function () {
-    mostrarPainel(false);
-    marcarConexao("nao", "sem conexão");
-    elUrl.focus();
-  });
+  abaGatilhos.addEventListener("click", function () { trocarAba("gatilhos"); });
+  abaApi.addEventListener("click", function () { trocarAba("api"); });
 
   btnAtualizar.addEventListener("click", function () { conferir(false); });
-  btnCriar.addEventListener("click", criar);
-  elReceitaAlvo.addEventListener("input", pintarReceita);
-  document.getElementById("btn-copiar").addEventListener("click", copiarReceita);
-  document.getElementById("btn-zerar").addEventListener("click", function () {
-    guardar(CHAVE_CONTADOR, "0");
-    pintarContador();
+
+  document.getElementById("btn-abrir-novo").addEventListener("click", function () {
+    caixaNovo.hidden = !caixaNovo.hidden;
+    if (!caixaNovo.hidden) { document.getElementById("novo-numero").focus(); }
   });
+  document.getElementById("btn-cancelar-novo").addEventListener("click", function () {
+    caixaNovo.hidden = true;
+  });
+  btnCriar.addEventListener("click", criar);
+
+  document.getElementById("btn-copiar-url").addEventListener("click", function () {
+    copiar(normalizarEndereco(elUrl.value), this);
+  });
+  document.getElementById("btn-copiar-senha").addEventListener("click", function () {
+    copiar(elSenha.value, this);
+  });
+  btnVerSenha.addEventListener("click", function () {
+    senhaVisivel = !senhaVisivel;
+    pintarCredenciais();
+  });
+  document.getElementById("btn-sortear").addEventListener("click", sortearSenha);
+  document.getElementById("btn-trocar-senha").addEventListener("click", trocarSenha);
 
   /* -------- inicio -------- */
 
   pintarContador();
-  pintarReceita();
   mostrarPainel(false);
 
   var urlSalva = recuperar(CHAVE_URL);
