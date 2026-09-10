@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Painel dos sensores virtuais que fazem a Siri disparar rotinas da Alexa.">
+<meta name="robots" content="noindex">
+<style>
+  html { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Mesa de Gatilhos</title>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground: #EEF1F5;
+    --surface: #FFFFFF;
+    --surface-2: #F7F9FB;
+    --ink: #12161C;
+    --ink-soft: #545D6B;
+    --ink-faint: #8892A0;
+    --line: #DBE0E7;
+    --line-strong: #C0C8D3;
+    --accent: #A9660C;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #FAF0DF;
+    --ok: #1F6B4B;
+    --ok-soft: #E2F0EA;
+    --bad: #A93B24;
+    --bad-soft: #F9E9E5;
+    --shadow: 0 1px 2px rgba(18, 22, 28, .05), 0 10px 28px -14px rgba(18, 22, 28, .22);
+
+    --display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0E1115;
+      --surface: #161A20;
+      --surface-2: #1B2028;
+      --ink: #E6E9EE;
+      --ink-soft: #98A2B0;
+      --ink-faint: #6B7581;
+      --line: #272E37;
+      --line-strong: #38414D;
+      --accent: #E9A542;
+      --accent-ink: #171004;
+      --accent-soft: #2A2013;
+      --ok: #55B98B;
+      --ok-soft: #13241D;
+      --bad: #E07458;
+      --bad-soft: #2A1611;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .45), 0 10px 28px -14px rgba(0, 0, 0, .7);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0E1115;
+    --surface: #161A20;
+    --surface-2: #1B2028;
+    --ink: #E6E9EE;
+    --ink-soft: #98A2B0;
+    --ink-faint: #6B7581;
+    --line: #272E37;
+    --line-strong: #38414D;
+    --accent: #E9A542;
+    --accent-ink: #171004;
+    --accent-soft: #2A2013;
+    --ok: #55B98B;
+    --ok-soft: #13241D;
+    --bad: #E07458;
+    --bad-soft: #2A1611;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .45), 0 10px 28px -14px rgba(0, 0, 0, .7);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  /* precisa vencer o display:flex das secoes abaixo */
+  [hidden] { display: none !important; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0 16px;
+    padding-block: 30px 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .envelope {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ---------------- cabecalho ---------------- */
+
+  .topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(28px, 6vw, 38px);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .subtitulo {
+    margin: 6px 0 0;
+    color: var(--ink-soft);
+    font-size: 14px;
+    max-width: 46ch;
+  }
+
+  .selo {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .lampada {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line-strong);
+    flex: none;
+  }
+  .selo[data-ligado="sim"] .lampada { background: var(--ok); }
+  .selo[data-ligado="erro"] .lampada { background: var(--bad); }
+  .selo[data-ligado="indo"] .lampada { background: var(--accent); }
+
+  /* ---------------- blocos ---------------- */
+
+  section { display: flex; flex-direction: column; gap: 12px; }
+
+  h2 {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .caixa {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .caixa-corpo { padding: 18px; display: flex; flex-direction: column; gap: 15px; }
+
+  /* ---------------- porta de entrada ---------------- */
+
+  .porta { max-width: 480px; width: 100%; margin: 18px auto 0; }
+  .porta .caixa-corpo { gap: 16px; }
+
+  .porta-texto { margin: 0; font-size: 14px; color: var(--ink-soft); }
+
+  /* ---------------- campos ---------------- */
+
+  .campo { display: flex; flex-direction: column; gap: 6px; }
+
+  label { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+
+  .dica { font-size: 12px; color: var(--ink-faint); font-weight: 400; }
+
+  input {
+    font-family: var(--mono);
+    font-size: 13.5px;
+    color: var(--ink);
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    padding: 10px 12px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  input:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .linha-campos { display: flex; flex-wrap: wrap; gap: 12px; }
+  .linha-campos > .campo { flex: 1 1 210px; }
+
+  /* ---------------- botoes ---------------- */
+
+  button {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 9px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color .13s ease, border-color .13s ease, color .13s ease;
+  }
+
+  button[disabled] { opacity: .45; cursor: not-allowed; }
+
+  .btn-forte { background: var(--ink); color: var(--ground); }
+  .btn-forte:hover:not([disabled]) { background: var(--ink-soft); }
+
+  .btn-quieto { background: var(--surface); color: var(--ink); border-color: var(--line-strong); }
+  .btn-quieto:hover:not([disabled]) { border-color: var(--ink-soft); }
+
+  .btn-disparo { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .btn-disparo:hover:not([disabled]) { background: var(--accent); color: var(--accent-ink); }
+
+  .btn-perigo { background: none; color: var(--bad); border-color: transparent; padding: 9px 10px; }
+  .btn-perigo:hover:not([disabled]) { background: var(--bad-soft); }
+
+  .fileira-botoes { display: flex; flex-wrap: wrap; gap: 9px; }
+
+  /* ---------------- barra de sessao ---------------- */
+
+  .barra-sessao {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 14px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  .barra-texto { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* ---------------- lista de gatilhos ---------------- */
+
+  .gatilhos { list-style: none; margin: 0; padding: 0; }
+
+  .gatilho {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 14px 18px;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  .gatilho:first-child { border-top: none; }
+
+  /* o numero do botao na API, que e a identidade dele */
+  .marca {
+    flex: none;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 4px 8px;
+    min-width: 44px;
+    text-align: center;
+  }
+
+  .gatilho-corpo { flex: 1 1 180px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+
+  .nome { font-weight: 600; font-size: 15.5px; overflow-wrap: anywhere; }
+
+  .meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); overflow-wrap: anywhere; }
+
+  .gatilho-lado { flex: none; display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+  .estado {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    padding: 4px 9px;
+    border-radius: 20px;
+    background: var(--surface-2);
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    min-width: 76px;
+    justify-content: center;
+  }
+  .estado[data-aberto="sim"] {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* assinatura: o contato abrindo e fechando ao disparar */
+  .gatilho::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 0;
+    background: var(--accent);
+    opacity: 0;
+  }
+  .gatilho[data-pulsando="sim"]::after {
+    animation: percorrer 900ms ease-out;
+  }
+  @keyframes percorrer {
+    0%   { width: 0;    opacity: 1; }
+    55%  { width: 100%; opacity: 1; }
+    100% { width: 100%; opacity: 0; }
+  }
+
+  .vazio { padding: 28px 18px; color: var(--ink-soft); font-size: 14px; text-align: center; }
+
+  /* ---------------- receita ---------------- */
+
+  pre {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    color: var(--ink);
+  }
+
+  .passos {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  .passos strong { color: var(--ink); font-weight: 600; }
+  .passos code {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  /* ---------------- recado ---------------- */
+
+  .recado {
+    font-size: 13.5px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    border: 1px solid;
+    display: none;
+  }
+  .recado[data-tipo="ok"] { display: block; background: var(--ok-soft); color: var(--ok); border-color: var(--ok); }
+  .recado[data-tipo="erro"] { display: block; background: var(--bad-soft); color: var(--bad); border-color: var(--bad); }
+
+  /* ---------------- rodape ---------------- */
+
+  .rodape {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+
+  .contador { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .contador b { color: var(--ink-soft); font-weight: 600; }
+
+  .link-nu {
+    background: none;
+    border: none;
+    padding: 0 0 0 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+  .link-nu:hover { color: var(--ink); }
+
+  @media (max-width: 520px) {
+    .gatilho-lado { margin-left: 0; width: 100%; }
+    .estado { min-width: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    .gatilho[data-pulsando="sim"]::after { animation: none; }
+  }
+</style>
+
+<div class="envelope">
+
+  <header class="topo">
+    <div>
+      <h1>Mesa de Gatilhos</h1>
+      <p class="subtitulo">Sensores virtuais que fazem a Siri disparar rotinas da Alexa.</p>
+    </div>
+    <span class="selo" id="selo" data-ligado="nao">
+      <span class="lampada"></span><span id="selo-texto">sem conexão</span>
+    </span>
+  </header>
+
+  <div class="recado" id="recado"></div>
+
+  <section class="porta" id="secao-acesso">
+    <div class="caixa">
+      <div class="caixa-corpo">
+        <p class="porta-texto">
+          Informe o endereço da sua API e a senha. Os dois ficam guardados só neste
+          navegador, e o painel abre assim que a API responder.
+        </p>
+        <div class="campo">
+          <label for="url">Endereço da API</label>
+          <input type="url" id="url" placeholder="https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="••••••••••••••••" autocomplete="current-password">
+        </div>
+        <div class="fileira-botoes">
+          <button class="btn-forte" id="btn-entrar">Entrar</button>
+          <button class="btn-quieto" id="btn-esquecer" hidden>Esquecer neste aparelho</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="barra-sessao" id="barra-sessao" hidden>
+    <span class="barra-texto" id="barra-texto">Conectado à sua API.</span>
+    <span class="fileira-botoes">
+      <button class="btn-quieto" id="btn-atualizar">Atualizar lista</button>
+      <button class="btn-quieto" id="btn-trocar">Trocar acesso</button>
+    </span>
+  </div>
+
+  <section id="secao-gatilhos" hidden>
+    <h2>Gatilhos</h2>
+    <div class="caixa">
+      <ul class="gatilhos" id="lista"></ul>
+    </div>
+  </section>
+
+  <section id="secao-novo" hidden>
+    <h2>Novo gatilho</h2>
+    <div class="caixa">
+      <div class="caixa-corpo">
+        <div class="linha-campos">
+          <div class="campo">
+            <label for="novo-numero">Número <span class="dica">até 99999</span></label>
+            <input type="text" id="novo-numero" inputmode="numeric" placeholder="12">
+          </div>
+          <div class="campo">
+            <label for="novo-nome">Nome <span class="dica">como aparece na Alexa</span></label>
+            <input type="text" id="novo-nome" placeholder="Gatilho Cinema">
+          </div>
+        </div>
+        <p class="dica" style="margin:0">
+          Depois de criar, peça à Alexa para buscar dispositivos novos, escolhendo o
+          tipo <strong>Outros</strong>. Só então o gatilho pode virar disparo de rotina.
+        </p>
+        <div class="fileira-botoes">
+          <button class="btn-forte" id="btn-criar">Criar gatilho</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="secao-receita" hidden>
+    <h2>Receita do atalho no iPhone</h2>
+    <div class="caixa">
+      <div class="caixa-corpo">
+        <ol class="passos">
+          <li>No app Atalhos, crie um atalho e adicione <strong>Obter conteúdo do URL</strong>.</li>
+          <li>No campo de endereço, cole a URL da sua API.</li>
+          <li>Toque em <strong>Mostrar mais</strong> e mude o método para <code>POST</code>.</li>
+          <li>Em Cabeçalhos, crie a chave <code>Authorization</code> com a sua senha no valor.</li>
+          <li>Em Corpo da solicitação, escolha <strong>JSON</strong> e monte o conteúdo abaixo.</li>
+          <li>Renomeie o atalho com a frase que você vai falar para a Siri.</li>
+        </ol>
+        <div class="campo">
+          <label for="receita-alvo">Corpo para o gatilho</label>
+          <input type="text" id="receita-alvo" placeholder="Gatilho Dormir" autocomplete="off">
+        </div>
+        <pre id="receita-json">{"command":"pushcontactbyname","param1":"Gatilho Dormir"}</pre>
+        <div class="fileira-botoes">
+          <button class="btn-quieto" id="btn-copiar">Copiar corpo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <span class="contador">
+      chamadas feitas por este painel: <b id="contador">0</b><button class="link-nu" id="btn-zerar" type="button">zerar</button>
+    </span>
+    <span>1 milhão de chamadas custa 1 dólar no API Gateway</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CHAVE_URL = "mesa.url";
+  var CHAVE_SENHA = "mesa.senha";
+  var CHAVE_CONTADOR = "mesa.chamadas";
+
+  var elUrl = document.getElementById("url");
+  var elSenha = document.getElementById("senha");
+  var elLista = document.getElementById("lista");
+  var elRecado = document.getElementById("recado");
+  var elSelo = document.getElementById("selo");
+  var elSeloTexto = document.getElementById("selo-texto");
+  var elContador = document.getElementById("contador");
+  var elReceitaAlvo = document.getElementById("receita-alvo");
+  var elReceitaJson = document.getElementById("receita-json");
+  var elBarraTexto = document.getElementById("barra-texto");
+
+  var secAcesso = document.getElementById("secao-acesso");
+  var barraSessao = document.getElementById("barra-sessao");
+  var secGatilhos = document.getElementById("secao-gatilhos");
+  var secNovo = document.getElementById("secao-novo");
+  var secReceita = document.getElementById("secao-receita");
+
+  var btnEntrar = document.getElementById("btn-entrar");
+  var btnEsquecer = document.getElementById("btn-esquecer");
+  var btnAtualizar = document.getElementById("btn-atualizar");
+  var btnCriar = document.getElementById("btn-criar");
+
+  var gatilhos = [];
+
+  /* -------- armazenamento local, sempre protegido -------- */
+
+  function guardar(chave, valor) {
+    try { localStorage.setItem(chave, valor); } catch (e) { /* modo privado */ }
+  }
+  function recuperar(chave) {
+    try { return localStorage.getItem(chave) || ""; } catch (e) { return ""; }
+  }
+
+  /* -------- contador de chamadas -------- */
+
+  function lerContador() {
+    var n = parseInt(recuperar(CHAVE_CONTADOR), 10);
+    return isNaN(n) ? 0 : n;
+  }
+  function pintarContador() { elContador.textContent = lerContador(); }
+  function somarChamada() {
+    guardar(CHAVE_CONTADOR, String(lerContador() + 1));
+    pintarContador();
+  }
+
+  /* -------- recados e visibilidade -------- */
+
+  var relogioRecado = null;
+  function recado(texto, tipo) {
+    elRecado.textContent = texto;
+    elRecado.setAttribute("data-tipo", tipo);
+    clearTimeout(relogioRecado);
+    if (tipo === "ok") {
+      relogioRecado = setTimeout(function () { elRecado.removeAttribute("data-tipo"); }, 6000);
+    }
+  }
+  function limparRecado() {
+    clearTimeout(relogioRecado);
+    elRecado.removeAttribute("data-tipo");
+  }
+
+  function marcarConexao(estado, texto) {
+    elSelo.setAttribute("data-ligado", estado);
+    elSeloTexto.textContent = texto;
+  }
+
+  function mostrarPainel(ligado) {
+    secAcesso.hidden = ligado;
+    barraSessao.hidden = !ligado;
+    secGatilhos.hidden = !ligado;
+    secNovo.hidden = !ligado;
+    secReceita.hidden = !ligado;
+    btnEsquecer.hidden = !(recuperar(CHAVE_URL) && recuperar(CHAVE_SENHA));
+  }
+
+  /* -------- conversa com a API -------- */
+
+  function chamar(comando, param1, param2) {
+    var endereco = elUrl.value.trim().replace(/\/+$/, "");
+    var senha = elSenha.value;
+    if (!endereco || !senha) {
+      return Promise.reject(new Error("Preencha o endereço da API e a senha."));
+    }
+    var corpo = { command: comando };
+    if (param1 !== undefined && param1 !== null) corpo.param1 = String(param1);
+    if (param2 !== undefined && param2 !== null) corpo.param2 = String(param2);
+
+    somarChamada();
+
+    return fetch(endereco, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": senha },
+      body: JSON.stringify(corpo)
+    }).then(function (r) {
+      if (r.status === 401 || r.status === 403) {
+        throw new Error("A API recusou a senha. Confira o valor e tente de novo.");
+      }
+      if (!r.ok) { throw new Error("A API respondeu com erro " + r.status + "."); }
+      return r.text();
+    }).then(function (texto) {
+      try {
+        var dado = JSON.parse(texto);
+        var chaves = Object.keys(dado);
+        return chaves.length ? String(dado[chaves[0]]) : "";
+      } catch (e) {
+        return texto;
+      }
+    }).catch(function (erro) {
+      if (erro instanceof TypeError) {
+        throw new Error("O navegador não conseguiu falar com a API. Confira o endereço e se as chamadas de navegador estão liberadas nela.");
+      }
+      throw erro;
+    });
+  }
+
+  /* -------- leitura e desenho da lista -------- */
+
+  function interpretarLista(bruto) {
+    var linhas = String(bruto).split("\n");
+    var saida = [];
+    for (var i = 0; i < linhas.length; i++) {
+      var linha = linhas[i].trim();
+      if (!linha) continue;
+      var partes = linha.split(/\s+/);
+      if (partes.length < 2) continue;
+      saida.push({
+        numero: partes[0],
+        aberto: partes[1].toUpperCase() === "ON",
+        nome: partes.slice(2).join(" ")
+      });
+    }
+    return saida;
+  }
+
+  function idTecnico(numero) {
+    var n = String(parseInt(numero, 10));
+    while (n.length < 6) { n = "0" + n; }
+    return "switch-" + n;
+  }
+
+  function desenhar(itens) {
+    elLista.textContent = "";
+
+    if (!itens.length) {
+      var vazio = document.createElement("li");
+      vazio.className = "vazio";
+      vazio.textContent = "Nenhum gatilho cadastrado ainda. Crie o primeiro abaixo.";
+      elLista.appendChild(vazio);
+      return;
+    }
+
+    itens.forEach(function (item) {
+      var li = document.createElement("li");
+      li.className = "gatilho";
+
+      var marca = document.createElement("span");
+      marca.className = "marca";
+      marca.textContent = item.numero;
+
+      var corpo = document.createElement("span");
+      corpo.className = "gatilho-corpo";
+
+      var nome = document.createElement("span");
+      nome.className = "nome";
+      nome.textContent = item.nome;
+
+      var meta = document.createElement("span");
+      meta.className = "meta";
+      meta.textContent = idTecnico(item.numero) + " · sensor de contato";
+
+      corpo.appendChild(nome);
+      corpo.appendChild(meta);
+
+      var lado = document.createElement("span");
+      lado.className = "gatilho-lado";
+
+      var estado = document.createElement("span");
+      estado.className = "estado";
+      estado.setAttribute("data-aberto", item.aberto ? "sim" : "nao");
+      estado.textContent = item.aberto ? "ABERTO" : "FECHADO";
+
+      var disparar = document.createElement("button");
+      disparar.className = "btn-disparo";
+      disparar.textContent = "Disparar";
+      disparar.addEventListener("click", function () { acionar(item, disparar, li, estado); });
+
+      var excluir = document.createElement("button");
+      excluir.className = "btn-perigo";
+      excluir.textContent = "Excluir";
+      excluir.addEventListener("click", function () { remover(item, excluir); });
+
+      lado.appendChild(estado);
+      lado.appendChild(disparar);
+      lado.appendChild(excluir);
+
+      li.appendChild(marca);
+      li.appendChild(corpo);
+      li.appendChild(lado);
+      elLista.appendChild(li);
+    });
+  }
+
+  /* -------- acoes -------- */
+
+  function entrar() {
+    var endereco = elUrl.value.trim();
+    var senha = elSenha.value;
+    if (!endereco || !senha) {
+      recado("Preencha o endereço da API e a senha.", "erro");
+      return;
+    }
+    guardar(CHAVE_URL, endereco);
+    guardar(CHAVE_SENHA, senha);
+    conferir(true);
+  }
+
+  function conferir(limpar) {
+    btnEntrar.disabled = true;
+    btnAtualizar.disabled = true;
+    marcarConexao("indo", "conferindo");
+
+    return chamar("getbuttons").then(function (bruto) {
+      gatilhos = interpretarLista(bruto);
+      desenhar(gatilhos);
+      mostrarPainel(true);
+      marcarConexao("sim", gatilhos.length + (gatilhos.length === 1 ? " gatilho" : " gatilhos"));
+      elBarraTexto.textContent = "Conectado à sua API.";
+      if (limpar) { limparRecado(); }
+      if (!elReceitaAlvo.value && gatilhos.length) {
+        elReceitaAlvo.value = gatilhos[0].nome;
+        pintarReceita();
+      }
+    }).catch(function (erro) {
+      mostrarPainel(false);
+      marcarConexao("erro", "não entrou");
+      recado(erro.message, "erro");
+    }).then(function () {
+      btnEntrar.disabled = false;
+      btnAtualizar.disabled = false;
+    });
+  }
+
+  function acionar(item, botao, linha, selo) {
+    botao.disabled = true;
+    var original = botao.textContent;
+    botao.textContent = "Disparando";
+
+    chamar("pushcontactbyname", item.nome).then(function () {
+      // mostra o contato abrindo e fechando, que e o que a API fez na Alexa
+      linha.setAttribute("data-pulsando", "sim");
+      selo.setAttribute("data-aberto", "sim");
+      selo.textContent = "ABERTO";
+      setTimeout(function () {
+        selo.setAttribute("data-aberto", "nao");
+        selo.textContent = "FECHADO";
+        linha.removeAttribute("data-pulsando");
+      }, 900);
+      recado("Gatilho “" + item.nome + "” disparado. A rotina ligada a ele deve reagir em instantes.", "ok");
+    }).catch(function (erro) {
+      recado(erro.message, "erro");
+    }).then(function () {
+      botao.textContent = original;
+      botao.disabled = false;
+    });
+  }
+
+  function remover(item, botao) {
+    if (!window.confirm("Excluir o gatilho “" + item.nome + "”?\n\nAs rotinas da Alexa que usam ele param de disparar.")) {
+      return;
+    }
+    botao.disabled = true;
+    chamar("deletebutton", item.numero).then(function () {
+      recado("Gatilho “" + item.nome + "” excluído.", "ok");
+      return conferir(false);
+    }).catch(function (erro) {
+      recado(erro.message, "erro");
+      botao.disabled = false;
+    });
+  }
+
+  function criar() {
+    var numero = document.getElementById("novo-numero").value.trim();
+    var nome = document.getElementById("novo-nome").value.trim();
+
+    if (!/^\d+$/.test(numero)) {
+      recado("O número precisa ser inteiro, sem letras nem símbolos.", "erro");
+      return;
+    }
+    if (parseInt(numero, 10) >= 100000) {
+      recado("Use um número abaixo de 100000. Dali para cima ficam as configurações internas da API, e sobrescrever uma delas quebra a ligação com a Alexa.", "erro");
+      return;
+    }
+    if (!nome) {
+      recado("Dê um nome ao gatilho. É por ele que o atalho do iPhone vai chamar o disparo.", "erro");
+      return;
+    }
+
+    btnCriar.disabled = true;
+    chamar("setname", numero, nome).then(function () {
+      recado("Gatilho “" + nome + "” criado. Agora peça à Alexa para buscar dispositivos novos.", "ok");
+      document.getElementById("novo-numero").value = "";
+      document.getElementById("novo-nome").value = "";
+      elReceitaAlvo.value = nome;
+      pintarReceita();
+      return conferir(false);
+    }).catch(function (erro) {
+      recado(erro.message, "erro");
+    }).then(function () {
+      btnCriar.disabled = false;
+    });
+  }
+
+  /* -------- receita -------- */
+
+  function pintarReceita() {
+    var alvo = elReceitaAlvo.value.trim() || "Gatilho Dormir";
+    elReceitaJson.textContent = JSON.stringify({
+      command: "pushcontactbyname",
+      param1: alvo
+    });
+  }
+
+  function copiarReceita() {
+    var texto = elReceitaJson.textContent;
+    var botao = document.getElementById("btn-copiar");
+    function avisar() {
+      var antes = botao.textContent;
+      botao.textContent = "Copiado";
+      setTimeout(function () { botao.textContent = antes; }, 1800);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(avisar, function () {
+        recado("O navegador bloqueou a cópia. Selecione o texto e copie na mão.", "erro");
+      });
+    } else {
+      recado("Este navegador não permite copiar sozinho. Selecione o texto e copie na mão.", "erro");
+    }
+  }
+
+  /* -------- ligacoes -------- */
+
+  btnEntrar.addEventListener("click", entrar);
+
+  elUrl.addEventListener("keydown", function (e) { if (e.key === "Enter") { elSenha.focus(); } });
+  elSenha.addEventListener("keydown", function (e) { if (e.key === "Enter") { entrar(); } });
+
+  btnEsquecer.addEventListener("click", function () {
+    guardar(CHAVE_URL, "");
+    guardar(CHAVE_SENHA, "");
+    elUrl.value = "";
+    elSenha.value = "";
+    gatilhos = [];
+    mostrarPainel(false);
+    marcarConexao("nao", "sem conexão");
+    recado("Endereço e senha apagados deste navegador.", "ok");
+  });
+
+  document.getElementById("btn-trocar").addEventListener("click", function () {
+    mostrarPainel(false);
+    marcarConexao("nao", "sem conexão");
+    elUrl.focus();
+  });
+
+  btnAtualizar.addEventListener("click", function () { conferir(false); });
+  btnCriar.addEventListener("click", criar);
+  elReceitaAlvo.addEventListener("input", pintarReceita);
+  document.getElementById("btn-copiar").addEventListener("click", copiarReceita);
+  document.getElementById("btn-zerar").addEventListener("click", function () {
+    guardar(CHAVE_CONTADOR, "0");
+    pintarContador();
+  });
+
+  /* -------- inicio -------- */
+
+  pintarContador();
+  pintarReceita();
+  mostrarPainel(false);
+
+  var urlSalva = recuperar(CHAVE_URL);
+  var senhaSalva = recuperar(CHAVE_SENHA);
+  elUrl.value = urlSalva;
+  elSenha.value = senhaSalva;
+
+  if (urlSalva && senhaSalva) {
+    conferir(true);
+  } else {
+    elUrl.focus();
+  }
+})();
+</script>
+</body>
+</html>
