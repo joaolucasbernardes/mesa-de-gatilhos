@@ -88,8 +88,6 @@
   }
 
   * { box-sizing: border-box; }
-
-  /* precisa vencer o display:flex das secoes */
   [hidden] { display: none !important; }
 
   body {
@@ -103,17 +101,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .envelope { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+  .envelope { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
 
   /* ---------------- cabecalho ---------------- */
 
-  .topo {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 8px 20px;
-  }
+  .topo { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
 
   h1 {
     margin: 0;
@@ -125,18 +117,11 @@
   }
 
   .selo {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-soft); white-space: nowrap;
   }
-
   .lampada { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); flex: none; }
   .selo[data-ligado="sim"] .lampada { background: var(--ok); }
   .selo[data-ligado="erro"] .lampada { background: var(--bad); }
@@ -144,27 +129,14 @@
 
   /* ---------------- abas ---------------- */
 
-  .abas {
-    display: flex;
-    gap: 2px;
-    border-bottom: 2px solid var(--line);
-    margin-bottom: 2px;
-  }
+  .abas { display: flex; border-bottom: 2px solid var(--line); }
 
   .aba {
-    appearance: none;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    padding: 10px 2px;
-    margin-right: 22px;
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink-faint);
-    cursor: pointer;
-    white-space: nowrap;
+    appearance: none; background: none; border: none;
+    border-bottom: 2px solid transparent; margin-bottom: -2px;
+    padding: 10px 2px; margin-right: 22px;
+    font-family: var(--sans); font-size: 14px; font-weight: 600;
+    color: var(--ink-faint); cursor: pointer; white-space: nowrap;
   }
   .aba:hover { color: var(--ink-soft); }
   .aba[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
@@ -174,26 +146,16 @@
   section { display: flex; flex-direction: column; gap: 12px; }
 
   h2 {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
+    margin: 0; font-family: var(--mono); font-size: 11px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint);
   }
 
   .caixa {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; box-shadow: var(--shadow); overflow: hidden;
   }
-
   .caixa-corpo { padding: 18px; display: flex; flex-direction: column; gap: 15px; }
-
-  .divisa { height: 1px; background: var(--line); margin: 2px 0; }
+  .divisa { height: 1px; background: var(--line); }
 
   /* ---------------- porta de entrada ---------------- */
 
@@ -203,27 +165,15 @@
   /* ---------------- campos ---------------- */
 
   .campo { display: flex; flex-direction: column; gap: 6px; }
-
   label { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
-
   .dica { font-size: 12px; color: var(--ink-faint); font-weight: 400; }
 
   input {
-    font-family: var(--mono);
-    font-size: 13.5px;
-    color: var(--ink);
-    background: var(--surface-2);
-    border: 1px solid var(--line-strong);
-    border-radius: 8px;
-    padding: 10px 12px;
-    width: 100%;
-    min-width: 0;
+    font-family: var(--mono); font-size: 13.5px; color: var(--ink);
+    background: var(--surface-2); border: 1px solid var(--line-strong);
+    border-radius: 8px; padding: 10px 12px; width: 100%; min-width: 0;
   }
-
-  input:focus-visible, button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+  input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .linha-campos { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
   .linha-campos > .campo { flex: 1 1 200px; }
@@ -231,17 +181,11 @@
   /* ---------------- botoes ---------------- */
 
   button {
-    font-family: var(--sans);
-    font-size: 13.5px;
-    font-weight: 600;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 9px 14px;
-    cursor: pointer;
-    white-space: nowrap;
+    font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+    border-radius: 8px; border: 1px solid transparent; padding: 9px 14px;
+    cursor: pointer; white-space: nowrap;
     transition: background-color .13s ease, border-color .13s ease, color .13s ease;
   }
-
   button[disabled] { opacity: .45; cursor: not-allowed; }
 
   .btn-forte { background: var(--ink); color: var(--ground); }
@@ -253,164 +197,128 @@
   .btn-disparo { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
   .btn-disparo:hover:not([disabled]) { background: var(--accent); color: var(--accent-ink); }
 
-  .fileira-botoes { display: flex; flex-wrap: wrap; gap: 9px; }
+  .btn-mini { font-size: 12.5px; padding: 6px 10px; }
 
-  /* acoes secundarias, discretas para nao competir com Disparar */
   .link-acao {
-    background: none;
-    border: none;
-    padding: 4px 2px;
-    font-family: var(--sans);
-    font-size: 12.5px;
-    font-weight: 500;
-    color: var(--ink-faint);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    background: none; border: none; padding: 4px 2px;
+    font-family: var(--sans); font-size: 12.5px; font-weight: 500;
+    color: var(--ink-faint); text-decoration: underline; text-underline-offset: 3px;
     cursor: pointer;
   }
   .link-acao:hover { color: var(--ink); }
   .link-acao.perigo:hover { color: var(--bad); }
 
-  /* ---------------- barra de sessao ---------------- */
+  .fileira-botoes { display: flex; flex-wrap: wrap; gap: 9px; }
 
-  .barra-sessao {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px 14px;
-  }
+  /* ---------------- barra ---------------- */
 
+  .barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; }
   .barra-texto { font-size: 13px; color: var(--ink-faint); font-family: var(--mono); }
 
-  /* ---------------- lista de gatilhos ---------------- */
+  /* ---------------- cards de gatilho ---------------- */
 
-  .gatilhos { list-style: none; margin: 0; padding: 0; }
-
-  .gatilho {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px 14px;
-    padding: 15px 18px;
-    border-top: 1px solid var(--line);
-    position: relative;
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
   }
-  .gatilho:first-child { border-top: none; }
 
-  .marca {
-    flex: none;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: var(--ink-soft);
-    background: var(--surface-2);
+  .card {
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 4px 8px;
-    min-width: 44px;
-    text-align: center;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
   }
 
-  .gatilho-corpo { flex: 1 1 190px; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .card-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 
-  .nome { font-weight: 600; font-size: 15.5px; overflow-wrap: anywhere; }
-
-  .meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); overflow-wrap: anywhere; }
-
-  .gatilho-lado { flex: none; display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+  .card-numero {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    font-variant-numeric: tabular-nums; color: var(--ink-faint);
+  }
 
   .estado {
-    display: inline-flex;
-    align-items: center;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    padding: 4px 9px;
-    border-radius: 20px;
-    background: var(--surface-2);
-    color: var(--ink-soft);
-    border: 1px solid var(--line);
-    min-width: 76px;
-    justify-content: center;
+    display: inline-flex; align-items: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    letter-spacing: .08em; padding: 3px 8px; border-radius: 20px;
+    background: var(--surface-2); color: var(--ink-soft); border: 1px solid var(--line);
   }
   .estado[data-aberto="sim"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
 
-  /* o contato abrindo e fechando ao disparar */
-  .gatilho::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    height: 2px;
-    width: 0;
-    background: var(--accent);
-    opacity: 0;
+  .card-nome {
+    font-family: var(--display); font-size: 17px; font-weight: 600;
+    letter-spacing: -.015em; line-height: 1.25; overflow-wrap: anywhere;
   }
-  .gatilho[data-pulsando="sim"]::after { animation: percorrer 900ms ease-out; }
+
+  .card-pe { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; }
+
+  .card-menos { display: flex; gap: 4px; margin-left: auto; }
+
+  /* o contato abrindo e fechando ao disparar */
+  .card::after {
+    content: ""; position: absolute; left: 0; top: 0;
+    height: 3px; width: 0; background: var(--accent); opacity: 0;
+  }
+  .card[data-pulsando="sim"]::after { animation: percorrer 900ms ease-out; }
   @keyframes percorrer {
     0%   { width: 0;    opacity: 1; }
     55%  { width: 100%; opacity: 1; }
     100% { width: 100%; opacity: 0; }
   }
 
-  .vazio { padding: 30px 18px; color: var(--ink-soft); font-size: 14px; text-align: center; }
+  .vazio {
+    grid-column: 1 / -1; padding: 34px 18px; text-align: center;
+    color: var(--ink-soft); font-size: 14px;
+    border: 1px dashed var(--line-strong); border-radius: 12px;
+  }
 
-  /* ---------------- valores copiaveis ---------------- */
+  /* ---------------- assistente do atalho ---------------- */
+
+  .assistente { border-color: var(--accent); }
+
+  .assistente-topo {
+    display: flex; align-items: baseline;
+    justify-content: space-between; gap: 14px;
+  }
+  .assistente-titulo {
+    flex: 1 1 auto; min-width: 0;
+    font-family: var(--display); font-size: 17px; font-weight: 600;
+    letter-spacing: -.015em; overflow-wrap: anywhere;
+  }
+  .assistente-topo .link-acao { flex: none; }
+
+  .passo { display: flex; gap: 12px; align-items: flex-start; }
+
+  .passo-num {
+    flex: none; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+
+  .passo-corpo { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .passo-texto { font-size: 13.5px; color: var(--ink-soft); }
+  .passo-texto strong { color: var(--ink); font-weight: 600; }
 
   .valor {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 9px 10px 9px 12px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 8px 8px 12px;
   }
-
   .valor code {
-    flex: 1 1 auto;
-    min-width: 0;
-    font-family: var(--mono);
-    font-size: 12.5px;
-    color: var(--ink);
-    overflow-x: auto;
-    white-space: nowrap;
+    flex: 1 1 auto; min-width: 0; font-family: var(--mono); font-size: 12.5px;
+    color: var(--ink); overflow-x: auto; white-space: nowrap;
   }
 
-  pre {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 12.5px;
-    line-height: 1.6;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 12px 14px;
-    overflow-x: auto;
-    color: var(--ink);
-  }
-
-  .passos {
-    margin: 0;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    font-size: 13.5px;
-    color: var(--ink-soft);
-  }
-  .passos strong { color: var(--ink); font-weight: 600; }
-  .passos code {
-    font-family: var(--mono);
-    font-size: 12.5px;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 1px 5px;
-  }
+  .par { display: flex; flex-wrap: wrap; gap: 8px; }
+  .par > .valor { flex: 1 1 190px; }
 
   /* ---------------- recado ---------------- */
 
@@ -421,29 +329,21 @@
   /* ---------------- rodape ---------------- */
 
   .rodape {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px 18px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-    font-size: 12.5px;
-    color: var(--ink-faint);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 8px 18px; padding-top: 16px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink-faint);
   }
-
   .contador { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   .contador b { color: var(--ink-soft); font-weight: 600; }
 
   @media (max-width: 520px) {
-    .gatilho-lado { margin-left: 0; width: 100%; }
-    .estado { min-width: 0; }
     .aba { margin-right: 16px; }
+    .grade { grid-template-columns: 1fr; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
-    .gatilho[data-pulsando="sim"]::after { animation: none; }
+    .card[data-pulsando="sim"]::after { animation: none; }
   }
 </style>
 
@@ -482,7 +382,7 @@
     </div>
   </section>
 
-  <!-- ============ navegacao ============ -->
+  <!-- ============ abas ============ -->
   <div class="abas" id="abas" role="tablist" hidden>
     <button class="aba" id="aba-gatilhos" role="tab" aria-selected="true" aria-controls="painel-gatilhos">Gatilhos de rotina</button>
     <button class="aba" id="aba-api" role="tab" aria-selected="false" aria-controls="painel-api">Acesso à API</button>
@@ -491,7 +391,7 @@
   <!-- ============ gatilhos ============ -->
   <div id="painel-gatilhos" role="tabpanel" aria-labelledby="aba-gatilhos" hidden>
     <section>
-      <div class="barra-sessao">
+      <div class="barra">
         <span class="barra-texto" id="barra-texto">nenhum gatilho</span>
         <span class="fileira-botoes">
           <button class="btn-quieto" id="btn-atualizar">Atualizar</button>
@@ -504,16 +404,16 @@
           <div class="linha-campos">
             <div class="campo">
               <label for="novo-numero">Número <span class="dica">até 99999</span></label>
-              <input type="text" id="novo-numero" inputmode="numeric" placeholder="12">
+              <input type="text" id="novo-numero" inputmode="numeric" placeholder="13">
             </div>
             <div class="campo">
               <label for="novo-nome">Nome <span class="dica">como aparece na Alexa</span></label>
-              <input type="text" id="novo-nome" placeholder="Boa Noite Geral">
+              <input type="text" id="novo-nome" placeholder="Gatilho Cinema">
             </div>
           </div>
           <p class="dica" style="margin:0">
-            Depois de criar, peça à Alexa para buscar dispositivos novos, escolhendo o
-            tipo <strong>Outros</strong>. Só então o gatilho pode virar disparo de rotina.
+            Ao criar, o assistente do atalho abre com os valores prontos. Depois peça
+            à Alexa para buscar dispositivos novos, escolhendo o tipo <strong>Outros</strong>.
           </p>
           <div class="fileira-botoes">
             <button class="btn-forte" id="btn-criar">Criar gatilho</button>
@@ -522,9 +422,118 @@
         </div>
       </div>
 
-      <div class="caixa">
-        <ul class="gatilhos" id="lista"></ul>
+      <!-- assistente do atalho, aberto sob demanda -->
+      <div class="caixa assistente" id="assistente" hidden>
+        <div class="caixa-corpo">
+          <div class="assistente-topo">
+            <span class="assistente-titulo" id="assistente-titulo">Montar o atalho</span>
+            <button class="link-acao" id="btn-fechar-assistente">fechar</button>
+          </div>
+
+          <div class="passo">
+            <span class="passo-num">1</span>
+            <span class="passo-corpo">
+              <span class="passo-texto">
+                No app <strong>Atalhos</strong>, toque em <strong>+</strong>, procure por
+                <strong>Obter conteúdo do URL</strong> e adicione.
+              </span>
+            </span>
+          </div>
+
+          <div class="passo">
+            <span class="passo-num">2</span>
+            <span class="passo-corpo">
+              <span class="passo-texto">Cole no campo de endereço:</span>
+              <span class="valor">
+                <code id="ass-url">—</code>
+                <button class="btn-quieto btn-mini" data-copia="ass-url">Copiar</button>
+              </span>
+            </span>
+          </div>
+
+          <div class="passo">
+            <span class="passo-num">3</span>
+            <span class="passo-corpo">
+              <span class="passo-texto">
+                Toque em <strong>Mostrar mais</strong> e mude o <strong>Método</strong> para
+                <strong>POST</strong>.
+              </span>
+            </span>
+          </div>
+
+          <div class="passo">
+            <span class="passo-num">4</span>
+            <span class="passo-corpo">
+              <span class="passo-texto">Em <strong>Cabeçalhos</strong>, adicione esta chave e este valor:</span>
+              <span class="par">
+                <span class="valor">
+                  <code id="ass-cab-chave">Authorization</code>
+                  <button class="btn-quieto btn-mini" data-copia="ass-cab-chave">Copiar</button>
+                </span>
+                <span class="valor">
+                  <code id="ass-cab-valor">—</code>
+                  <button class="btn-quieto btn-mini" data-copia="ass-cab-valor">Copiar</button>
+                </span>
+              </span>
+            </span>
+          </div>
+
+          <div class="passo">
+            <span class="passo-num">5</span>
+            <span class="passo-corpo">
+              <span class="passo-texto">
+                Em <strong>Pedir Corpo</strong>, escolha <strong>JSON</strong> e crie dois
+                campos de <strong>Texto</strong>:
+              </span>
+              <span class="par">
+                <span class="valor">
+                  <code id="ass-c1-chave">command</code>
+                  <button class="btn-quieto btn-mini" data-copia="ass-c1-chave">Copiar</button>
+                </span>
+                <span class="valor">
+                  <code id="ass-c1-valor">pushcontactbyname</code>
+                  <button class="btn-quieto btn-mini" data-copia="ass-c1-valor">Copiar</button>
+                </span>
+              </span>
+              <span class="par">
+                <span class="valor">
+                  <code id="ass-c2-chave">param1</code>
+                  <button class="btn-quieto btn-mini" data-copia="ass-c2-chave">Copiar</button>
+                </span>
+                <span class="valor">
+                  <code id="ass-c2-valor">—</code>
+                  <button class="btn-quieto btn-mini" data-copia="ass-c2-valor">Copiar</button>
+                </span>
+              </span>
+            </span>
+          </div>
+
+          <div class="passo">
+            <span class="passo-num">6</span>
+            <span class="passo-corpo">
+              <span class="passo-texto">
+                Renomeie o atalho com a frase que você vai falar para a Siri. Sugestão
+                para este gatilho:
+              </span>
+              <span class="valor">
+                <code id="ass-frase">—</code>
+                <button class="btn-quieto btn-mini" data-copia="ass-frase">Copiar</button>
+              </span>
+            </span>
+          </div>
+
+          <div class="divisa"></div>
+
+          <p class="dica" style="margin:0">
+            Não existe jeito de instalar um atalho pronto por link. Desde o iOS 15 a
+            Apple só aceita arquivos de atalho assinados por ela, e assinar exige um
+            Mac. Por isso o caminho é montar uma vez e depois duplicar no iPhone,
+            trocando só o campo do passo 5.
+          </p>
+        </div>
       </div>
+
+      <div class="grade" id="grade"></div>
     </section>
   </div>
 
@@ -538,7 +547,7 @@
             <label>Endereço</label>
             <div class="valor">
               <code id="api-endereco">—</code>
-              <button class="btn-quieto" id="btn-copiar-url">Copiar</button>
+              <button class="btn-quieto btn-mini" id="btn-copiar-url">Copiar</button>
             </div>
           </div>
 
@@ -546,14 +555,14 @@
             <label>Senha <span class="dica">vai no cabeçalho Authorization</span></label>
             <div class="valor">
               <code id="api-senha">••••••••••••••••</code>
-              <button class="btn-quieto" id="btn-ver-senha">Mostrar</button>
-              <button class="btn-quieto" id="btn-copiar-senha">Copiar</button>
+              <button class="btn-quieto btn-mini" id="btn-ver-senha">Mostrar</button>
+              <button class="btn-quieto btn-mini" id="btn-copiar-senha">Copiar</button>
             </div>
           </div>
 
           <p class="dica" style="margin:0">
-            O endereço e a senha juntos abrem todas as suas rotinas. Trate os dois
-            como a chave da sua casa.
+            O endereço e a senha juntos abrem todas as suas rotinas. Trate os dois como
+            a chave da sua casa.
           </p>
 
           <div class="divisa"></div>
@@ -571,36 +580,9 @@
             </div>
           </div>
           <p class="dica" style="margin:0">
-            Trocar a senha derruba todos os atalhos do iPhone que usam a antiga.
-            Você vai precisar atualizar o cabeçalho em cada um deles.
+            Trocar a senha derruba todos os atalhos do iPhone que usam a antiga. Você
+            vai precisar atualizar o cabeçalho em cada um deles.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <section style="margin-top:20px">
-      <h2>Como montar o atalho no iPhone</h2>
-      <div class="caixa">
-        <div class="caixa-corpo">
-          <ol class="passos">
-            <li>No app Atalhos, crie um atalho e adicione <strong>Obter conteúdo do URL</strong>.</li>
-            <li>Cole o endereço acima no campo de URL.</li>
-            <li>Toque em <strong>Mostrar mais</strong> e mude o método para <code>POST</code>.</li>
-            <li>Em Cabeçalhos, crie <code>Authorization</code> e cole a senha no valor.</li>
-            <li>Em Pedir Corpo, escolha <strong>JSON</strong> e monte dois campos de texto.</li>
-            <li>Renomeie o atalho com a frase que você vai falar para a Siri.</li>
-          </ol>
-
-          <div class="campo">
-            <label>Corpo, montado campo a campo</label>
-            <pre id="modelo-campos">command   pushcontactbyname
-param1    nome do gatilho</pre>
-          </div>
-
-          <div class="campo">
-            <label>Ou como texto puro <span class="dica">use o botão Copiar de cada gatilho</span></label>
-            <pre id="modelo-texto">{"command":"pushcontactbyname","param1":"nome do gatilho"}</pre>
-          </div>
         </div>
       </div>
     </section>
@@ -623,7 +605,7 @@ param1    nome do gatilho</pre>
 
   var elUrl = document.getElementById("url");
   var elSenha = document.getElementById("senha");
-  var elLista = document.getElementById("lista");
+  var elGrade = document.getElementById("grade");
   var elRecado = document.getElementById("recado");
   var elSelo = document.getElementById("selo");
   var elSeloTexto = document.getElementById("selo-texto");
@@ -640,6 +622,7 @@ param1    nome do gatilho</pre>
   var painelGatilhos = document.getElementById("painel-gatilhos");
   var painelApi = document.getElementById("painel-api");
   var caixaNovo = document.getElementById("caixa-novo");
+  var elAssistente = document.getElementById("assistente");
 
   var btnEntrar = document.getElementById("btn-entrar");
   var btnEsquecer = document.getElementById("btn-esquecer");
@@ -659,7 +642,7 @@ param1    nome do gatilho</pre>
     try { return localStorage.getItem(chave) || ""; } catch (e) { return ""; }
   }
 
-  /* -------- contador de chamadas -------- */
+  /* -------- contador -------- */
 
   function lerContador() {
     var n = parseInt(recuperar(CHAVE_CONTADOR), 10);
@@ -699,6 +682,7 @@ param1    nome do gatilho</pre>
       painelGatilhos.hidden = true;
       painelApi.hidden = true;
       caixaNovo.hidden = true;
+      elAssistente.hidden = true;
     } else {
       trocarAba(abaApi.getAttribute("aria-selected") === "true" ? "api" : "gatilhos");
     }
@@ -718,8 +702,7 @@ param1    nome do gatilho</pre>
 
   /* Colar endereco costuma perder caracteres do comeco, e o campo aceita
      porque "ttps://host" e uma URL valida, so que de um esquema que nao
-     existe. Aqui a gente reduz tudo ao host e sempre forca https, que e o
-     unico jeito que o API Gateway atende. */
+     existe. Aqui a gente reduz tudo ao host e sempre forca https. */
   function normalizarEndereco(bruto) {
     var v = String(bruto || "").trim().replace(/\/+$/, "");
     if (!v) return "";
@@ -770,6 +753,23 @@ param1    nome do gatilho</pre>
     });
   }
 
+  /* -------- copiar -------- */
+
+  function copiar(texto, botao) {
+    function avisar() {
+      var antes = botao.textContent;
+      botao.textContent = "Copiado";
+      setTimeout(function () { botao.textContent = antes; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(avisar, function () {
+        recado("O navegador bloqueou a cópia. Selecione o texto e copie na mão.", "erro");
+      });
+    } else {
+      recado("Este navegador não permite copiar sozinho. Selecione o texto e copie na mão.", "erro");
+    }
+  }
+
   /* -------- lista -------- */
 
   function interpretarLista(bruto) {
@@ -789,78 +789,75 @@ param1    nome do gatilho</pre>
     return saida;
   }
 
-  function corpoDoAtalho(nome) {
-    return JSON.stringify({ command: "pushcontactbyname", param1: nome });
+  /* -------- assistente do atalho -------- */
+
+  /* Vira uma frase falavel: tira a palavra Gatilho, que so serve para
+     agrupar os dispositivos na lista da Alexa, e deixa o resto. */
+  function fraseSugerida(nome) {
+    return nome.replace(/^gatilho\s+/i, "").trim() || nome;
   }
 
-  function copiar(texto, botao) {
-    function avisar() {
-      var antes = botao.textContent;
-      botao.textContent = "Copiado";
-      setTimeout(function () { botao.textContent = antes; }, 1600);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(texto).then(avisar, function () {
-        recado("O navegador bloqueou a cópia. Selecione o texto e copie na mão.", "erro");
-      });
-    } else {
-      recado("Este navegador não permite copiar sozinho. Selecione o texto e copie na mão.", "erro");
-    }
+  function abrirAssistente(item) {
+    document.getElementById("assistente-titulo").textContent = "Montar o atalho de " + item.nome;
+    document.getElementById("ass-url").textContent = normalizarEndereco(elUrl.value);
+    document.getElementById("ass-cab-valor").textContent = elSenha.value;
+    document.getElementById("ass-c2-valor").textContent = item.nome;
+    document.getElementById("ass-frase").textContent = fraseSugerida(item.nome);
+    elAssistente.hidden = false;
+    elAssistente.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  /* -------- desenho dos cards -------- */
 
   function desenhar(itens) {
-    elLista.textContent = "";
+    elGrade.textContent = "";
 
     if (!itens.length) {
-      var vazio = document.createElement("li");
+      var vazio = document.createElement("div");
       vazio.className = "vazio";
       vazio.textContent = "Nenhum gatilho ainda. Crie o primeiro no botão acima.";
-      elLista.appendChild(vazio);
+      elGrade.appendChild(vazio);
       return;
     }
 
     itens.forEach(function (item) {
-      var li = document.createElement("li");
-      li.className = "gatilho";
+      var card = document.createElement("div");
+      card.className = "card";
 
-      var marca = document.createElement("span");
-      marca.className = "marca";
-      marca.textContent = item.numero;
+      var topo = document.createElement("div");
+      topo.className = "card-topo";
 
-      var corpo = document.createElement("span");
-      corpo.className = "gatilho-corpo";
-
-      var nome = document.createElement("span");
-      nome.className = "nome";
-      nome.textContent = item.nome;
-
-      var meta = document.createElement("span");
-      meta.className = "meta";
-      meta.textContent = corpoDoAtalho(item.nome);
-
-      corpo.appendChild(nome);
-      corpo.appendChild(meta);
-
-      var lado = document.createElement("span");
-      lado.className = "gatilho-lado";
+      var numero = document.createElement("span");
+      numero.className = "card-numero";
+      numero.textContent = "nº " + item.numero;
 
       var estado = document.createElement("span");
       estado.className = "estado";
       estado.setAttribute("data-aberto", item.aberto ? "sim" : "nao");
       estado.textContent = item.aberto ? "ABERTO" : "FECHADO";
 
+      topo.appendChild(numero);
+      topo.appendChild(estado);
+
+      var nome = document.createElement("div");
+      nome.className = "card-nome";
+      nome.textContent = item.nome;
+
+      var pe = document.createElement("div");
+      pe.className = "card-pe";
+
       var disparar = document.createElement("button");
       disparar.className = "btn-disparo";
       disparar.textContent = "Disparar";
-      disparar.addEventListener("click", function () { acionar(item, disparar, li, estado); });
+      disparar.addEventListener("click", function () { acionar(item, disparar, card, estado); });
 
-      var btnCopiar = document.createElement("button");
-      btnCopiar.className = "btn-quieto";
-      btnCopiar.textContent = "Copiar";
-      btnCopiar.title = "Copia o corpo da requisição para o atalho";
-      btnCopiar.addEventListener("click", function () {
-        copiar(corpoDoAtalho(item.nome), btnCopiar);
-      });
+      var atalho = document.createElement("button");
+      atalho.className = "btn-quieto";
+      atalho.textContent = "Montar atalho";
+      atalho.addEventListener("click", function () { abrirAssistente(item); });
+
+      var menos = document.createElement("span");
+      menos.className = "card-menos";
 
       var renomear = document.createElement("button");
       renomear.className = "link-acao";
@@ -872,16 +869,17 @@ param1    nome do gatilho</pre>
       excluir.textContent = "excluir";
       excluir.addEventListener("click", function () { remover(item, excluir); });
 
-      lado.appendChild(estado);
-      lado.appendChild(disparar);
-      lado.appendChild(btnCopiar);
-      lado.appendChild(renomear);
-      lado.appendChild(excluir);
+      menos.appendChild(renomear);
+      menos.appendChild(excluir);
 
-      li.appendChild(marca);
-      li.appendChild(corpo);
-      li.appendChild(lado);
-      elLista.appendChild(li);
+      pe.appendChild(disparar);
+      pe.appendChild(atalho);
+      pe.appendChild(menos);
+
+      card.appendChild(topo);
+      card.appendChild(nome);
+      card.appendChild(pe);
+      elGrade.appendChild(card);
     });
   }
 
@@ -913,9 +911,8 @@ param1    nome do gatilho</pre>
       gatilhos = interpretarLista(bruto);
       desenhar(gatilhos);
       mostrarPainel(true);
-      var quantos = gatilhos.length + (gatilhos.length === 1 ? " gatilho" : " gatilhos");
       marcarConexao("sim", "conectado");
-      elBarraTexto.textContent = quantos;
+      elBarraTexto.textContent = gatilhos.length + (gatilhos.length === 1 ? " gatilho" : " gatilhos");
       if (limpar) { limparRecado(); }
     }).catch(function (erro) {
       mostrarPainel(false);
@@ -927,20 +924,19 @@ param1    nome do gatilho</pre>
     });
   }
 
-  function acionar(item, botao, linha, selo) {
+  function acionar(item, botao, card, selo) {
     botao.disabled = true;
     var original = botao.textContent;
     botao.textContent = "Disparando";
 
     chamar("pushcontactbyname", item.nome).then(function () {
-      // mostra o contato abrindo e fechando, que e o que a API fez na Alexa
-      linha.setAttribute("data-pulsando", "sim");
+      card.setAttribute("data-pulsando", "sim");
       selo.setAttribute("data-aberto", "sim");
       selo.textContent = "ABERTO";
       setTimeout(function () {
         selo.setAttribute("data-aberto", "nao");
         selo.textContent = "FECHADO";
-        linha.removeAttribute("data-pulsando");
+        card.removeAttribute("data-pulsando");
       }, 900);
       recado("Gatilho “" + item.nome + "” disparado. A rotina ligada a ele deve reagir em instantes.", "ok");
     }).catch(function (erro) {
@@ -962,7 +958,7 @@ param1    nome do gatilho</pre>
     if (novo === item.nome) { return; }
 
     chamar("setname", item.numero, novo).then(function () {
-      recado("Renomeado para “" + novo + "”. Os atalhos do iPhone que citam o nome antigo precisam ser atualizados, e a Alexa precisa buscar dispositivos de novo.", "ok");
+      recado("Renomeado para “" + novo + "”. Os atalhos que citam o nome antigo precisam ser atualizados, e a Alexa precisa buscar dispositivos de novo.", "ok");
       return conferir(false);
     }).catch(function (erro) {
       recado(erro.message, "erro");
@@ -976,6 +972,7 @@ param1    nome do gatilho</pre>
     botao.disabled = true;
     chamar("deletebutton", item.numero).then(function () {
       recado("Gatilho “" + item.nome + "” excluído.", "ok");
+      elAssistente.hidden = true;
       return conferir(false);
     }).catch(function (erro) {
       recado(erro.message, "erro");
@@ -1006,11 +1003,13 @@ param1    nome do gatilho</pre>
 
     btnCriar.disabled = true;
     chamar("setname", numero, nome).then(function () {
-      recado("Gatilho “" + nome + "” criado. Agora peça à Alexa para buscar dispositivos novos, tipo Outros.", "ok");
+      recado("Gatilho “" + nome + "” criado. Monte o atalho abaixo e depois peça à Alexa para buscar dispositivos novos, tipo Outros.", "ok");
       document.getElementById("novo-numero").value = "";
       document.getElementById("novo-nome").value = "";
       caixaNovo.hidden = true;
-      return conferir(false);
+      return conferir(false).then(function () {
+        abrirAssistente({ numero: numero, nome: nome, aberto: false });
+      });
     }).catch(function (erro) {
       recado(erro.message, "erro");
     }).then(function () {
@@ -1095,6 +1094,18 @@ param1    nome do gatilho</pre>
     caixaNovo.hidden = true;
   });
   btnCriar.addEventListener("click", criar);
+
+  document.getElementById("btn-fechar-assistente").addEventListener("click", function () {
+    elAssistente.hidden = true;
+  });
+
+  // todos os botoes de copiar do assistente, num ouvinte so
+  elAssistente.addEventListener("click", function (e) {
+    var alvo = e.target.closest("[data-copia]");
+    if (!alvo) { return; }
+    var fonte = document.getElementById(alvo.getAttribute("data-copia"));
+    if (fonte) { copiar(fonte.textContent, alvo); }
+  });
 
   document.getElementById("btn-copiar-url").addEventListener("click", function () {
     copiar(normalizarEndereco(elUrl.value), this);
